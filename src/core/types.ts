@@ -4,8 +4,14 @@ const CORE_TYPES = {
   LOGGER: Symbol.for("LOGGER"),
 };
 
+const USER_TYPES = {
+    USER_SERVICE: Symbol.for("USER_SERVICE"),
+    USER_CONTROLLER: Symbol.for("USER_CONTROLLER"),
+};
+
 const TYPES = {
   ...CORE_TYPES,
+  ...USER_TYPES,
 };
 
 export default TYPES;

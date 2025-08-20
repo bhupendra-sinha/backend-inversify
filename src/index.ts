@@ -1,13 +1,16 @@
 import "reflect-metadata";
 import { Application } from "./app";
 import container from "./core/di/inversify.config";
+import { InversifyLoader } from "./core/di/inversify.loader";
+import coreModules from "./core/core.module";
+import apiModules from "./core/di/api-modules";
 
 async function bootstrap() {
-  //   const loader = new InversifyLoader(container);
+  const loader = new InversifyLoader(container);
 
-  //   console.time("Total Module Load Time");
-  //   loader.loadModules([coreModules, ...apiModules]);
-  //   console.timeEnd("Total Module Load Time");
+  console.time("Total Module Load Time");
+  loader.loadModules([coreModules, ...apiModules]);
+  console.timeEnd("Total Module Load Time");
 
   console.time("Application bind");
   container.bind<Application>(Application).toSelf();
