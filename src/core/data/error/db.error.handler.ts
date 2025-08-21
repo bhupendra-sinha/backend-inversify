@@ -10,7 +10,7 @@ import container from '@core/di/inversify.config';
  * @returns A properly formatted application error
  */
 export function handleDatabaseError(error: unknown): Error {
-	const logger = container.get<ILogger>(TYPES.Logger);
+	const logger = container.get<ILogger>(TYPES.LOGGER);
 
 	// Handle TypeORM's QueryFailedError
 	if (error instanceof QueryFailedError) {

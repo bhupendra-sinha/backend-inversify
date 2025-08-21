@@ -1,8 +1,10 @@
 {
-	"name": "backend-inversify",
+	"name": "ruya-backend",
 	"version": "1.0.0",
 	"main": "index.js",
 	"scripts": {
+		"build": "rimraf build && tsc",
+		"start": "node build/src/index.js",
 		"dev": "nodemon index.ts",
 		"lint": "eslint . --ext .ts",
 		"lint:fix": "eslint . --ext .ts --fix",
@@ -19,6 +21,16 @@
 	"repository": "https://github.com/bhupendra-sinha/backend-inversify.git",
 	"author": "bhupendra-sinha <bhupendrasinha35413@gmail.com>",
 	"license": "MIT",
+	"_moduleAliases": {
+		"@core": "./build/src/core",
+		"@modules": "./build/src/modules",
+		"@config": "./build/src/core/config",
+		"@error": "./build/src/core/error",
+		"@logger": "./build/src/core/logger",
+		"@db": "./build/src/core/db",
+		"@types": "./build/src/core/types",
+		"@utils": "./build/src/utils"
+	},
 	"dependencies": {
 		"@types/express": "^5.0.3",
 		"@types/node": "^24.3.0",
@@ -26,6 +38,7 @@
 		"express": "4.21.2",
 		"inversify": "6.2.2",
 		"inversify-express-utils": "6.4.10",
+		"module-alias": "^2.2.3",
 		"nodemon": "^3.1.10",
 		"pg": "^8.16.3",
 		"reflect-metadata": "^0.2.2",
@@ -47,6 +60,7 @@
 		"husky": "^9.1.7",
 		"lint-staged": "^16.1.5",
 		"prettier": "^3.6.2",
+		"rimraf": "^6.0.1",
 		"typescript": "^5.9.2",
 		"typescript-eslint": "^8.40.0"
 	}
