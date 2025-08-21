@@ -3,9 +3,9 @@ import TYPES from '../../core/types';
 import { UserService } from './services/user.service';
 import { UserController } from './controllers/user.controller';
 
-const userModule = new ContainerModule(bind => {
-	bind<UserService>(TYPES.USER_SERVICE).to(UserService).inSingletonScope();
-	bind<UserController>(TYPES.USER_CONTROLLER).to(UserController).inSingletonScope();
+const userModule = new ContainerModule(options => {
+	options.bind<UserService>(TYPES.USER_SERVICE).to(UserService).inSingletonScope();
+	options.bind<UserController>(TYPES.USER_CONTROLLER).to(UserController).inSingletonScope();
 });
 
 export default userModule;

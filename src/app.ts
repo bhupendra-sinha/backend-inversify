@@ -6,12 +6,12 @@ import { DbService } from '@core/db/db.service';
 import { ILogger } from '@core/logger/logger.interface';
 import { ConfigService } from '@core/config/config';
 import TYPES from '@core/types';
-import container from '@core/di/inversify.config';
 import { ErrorHandlerMiddleware } from '@core/error/errorHandling.middleware';
+import container from '@core/di/inversify.config';
 
 @injectable()
 export class Application {
-	private app: express.Application | undefined;
+	private app: express.Application;
 	private server: InversifyExpressServer;
 
 	constructor(
@@ -21,6 +21,7 @@ export class Application {
 		@inject(TYPES.ERROR_HANDLER) private errorHandler: ErrorHandlerMiddleware
 	) {
 		this.server = new InversifyExpressServer(container, null, null, null, null);
+		this.app = express();
 	}
 
 	async initialize(): Promise<void> {
@@ -46,7 +47,9 @@ export class Application {
 
 	async start(): Promise<void> {
 		// Initialize the server
-		this.app = this.server.build();
+		// console.log('COMING HERE');
+		// this.app = this.server.build();
+		// console.log('COMING HERE 2');
 		const serverConfig = this.config.getServerConfig();
 		this.app.get('/health', (req, res) => {
 			res.status(200).send(`BE is running!`);
