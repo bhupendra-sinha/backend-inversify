@@ -18,7 +18,7 @@ export class ConfigService {
 	}
 
 	getDatabaseConfig(): DatabaseConfig {
-		const entities = [__dirname + 'src/modules/**/entities/*.entity.js'];
+		const entities = ['src/modules/**/entities/*.entity.ts'];
 
 		return {
 			port: this.env.PG_PORT,

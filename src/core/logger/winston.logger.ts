@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { ILogger } from './logger.interface';
 import { createLogger, format, transports, Logger as WinstonLogger } from 'winston';
 import TYPES from '../types';
-import { ConfigService } from '../config/config';
+import { ConfigService } from '@core/config/config';
 
 @injectable()
 export class Logger implements ILogger {

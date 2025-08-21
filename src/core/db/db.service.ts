@@ -24,4 +24,8 @@ export class DbService {
 			throw error;
 		}
 	}
+
+	getDataSource(): DataSource {
+		return this.dataSource;
+	}
 }
