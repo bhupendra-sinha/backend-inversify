@@ -1,5 +1,5 @@
-import { Container } from "inversify";
-import "reflect-metadata";
+import { Container } from 'inversify';
+import 'reflect-metadata';
 
 // create container
 const container = new Container();

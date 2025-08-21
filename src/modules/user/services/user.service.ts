@@ -1,10 +1,10 @@
-import { injectable } from "inversify";
+import { injectable } from 'inversify';
 
 @injectable()
 export class UserService {
-  constructor() {}
+	constructor() {}
 
-  async create(data: any) {
-    return data;
-  }
+	async create(data: any) {
+		return data;
+	}
 }

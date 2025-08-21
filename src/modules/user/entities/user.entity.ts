@@ -1,7 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity } from 'typeorm';
 
-@Entity("users")
+@Entity('users')
 export class User {
-  @Column({ length: 255, nullable: false })
-  name!: string;
+	@Column({ length: 255, nullable: false })
+	name!: string;
 }

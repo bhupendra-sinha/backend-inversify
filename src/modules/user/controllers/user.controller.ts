@@ -1,9 +1,9 @@
-import { controller, httpPost, requestBody } from "inversify-express-utils";
+import { controller, httpPost, requestBody } from 'inversify-express-utils';
 
-@controller("/user")
+@controller('/user')
 export class UserController {
-  @httpPost("/")
-  async create(@requestBody() body: any) {
-    return "create user";
-  }
+	@httpPost('/')
+	async create(@requestBody() body: any) {
+		return body;
+	}
 }
