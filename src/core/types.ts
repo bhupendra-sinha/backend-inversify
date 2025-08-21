@@ -1,7 +1,8 @@
 const CORE_TYPES = {
 	CONFIG: Symbol.for('CONFIG'),
 	DB: Symbol.for('DB'),
-	LOGGER: Symbol.for('LOGGER')
+	LOGGER: Symbol.for('LOGGER'),
+	ERROR_HANDLER: Symbol.for('ERROR_HANDLER')
 };
 
 const USER_TYPES = {

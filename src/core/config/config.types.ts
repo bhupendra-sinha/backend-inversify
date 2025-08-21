@@ -24,4 +24,5 @@ export interface CorsConfig {
 
 export interface ServerConfig {
 	logLevel: string;
+	port: number;
 }

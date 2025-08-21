@@ -12,6 +12,7 @@ export class ConfigService {
 
 	getServerConfig(): ServerConfig {
 		return {
+			port: this.env.PORT,
 			logLevel: this.env.SERVER_LOG_LEVEL
 		};
 	}

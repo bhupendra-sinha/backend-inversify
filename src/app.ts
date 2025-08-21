@@ -7,6 +7,7 @@ import { ILogger } from '@core/logger/logger.interface';
 import { ConfigService } from '@core/config/config';
 import TYPES from '@core/types';
 import container from '@core/di/inversify.config';
+import { ErrorHandlerMiddleware } from '@core/error/errorHandling.middleware';
 
 @injectable()
 export class Application {
@@ -16,7 +17,8 @@ export class Application {
 	constructor(
 		@inject(TYPES.DB) private dbService: DbService,
 		@inject(TYPES.LOGGER) private logger: ILogger,
-		@inject(TYPES.CONFIG) private config: ConfigService
+		@inject(TYPES.CONFIG) private config: ConfigService,
+		@inject(TYPES.ERROR_HANDLER) private errorHandler: ErrorHandlerMiddleware
 	) {
 		this.server = new InversifyExpressServer(container, null, null, null, null);
 	}
@@ -38,10 +40,7 @@ export class Application {
 		});
 
 		this.server.setErrorConfig(app => {
-			app.use((err: Error, req: express.Request, res: express.Response) => {
-				this.logger.error(err.message, err);
-				res.status(500).json({ error: err.message });
-			});
+			app.use(this.errorHandler.handle.bind(this.errorHandler));
 		});
 	}
 
@@ -55,8 +54,8 @@ export class Application {
 
 		return new Promise(resolve => {
 			this.dbService.initialize();
-			this.app?.listen(8080, () => {
-				this.logger.info(`Server running in ${serverConfig.logLevel} mode on port 8080`);
+			this.app?.listen(serverConfig.port, () => {
+				this.logger.info(`Server running in ${serverConfig.logLevel} mode on port ${serverConfig.port}`);
 				resolve();
 			});
 		});
