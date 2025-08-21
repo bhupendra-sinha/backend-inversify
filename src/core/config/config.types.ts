@@ -14,6 +14,14 @@ export interface DatabaseConfig {
 	ssl: false | { rejectUnauthorized: boolean };
 }
 
+export interface CorsConfig {
+	origin: string[];
+	methods: string[];
+	allowedHeaders: string[];
+	credentials: boolean;
+	maxAge: number;
+}
+
 export interface ServerConfig {
 	logLevel: string;
 }

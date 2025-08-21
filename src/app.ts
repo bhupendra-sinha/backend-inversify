@@ -1,11 +1,12 @@
 import { InversifyExpressServer } from 'inversify-express-utils';
 import { inject, injectable } from 'inversify';
 import express from 'express';
-import container from './core/di/inversify.config';
-import TYPES from './core/types';
-import { DbService } from './core/db/db.service';
-import { ILogger } from './core/logger/logger.interface';
-import { ConfigService } from './core/config/config';
+import cors from 'cors';
+import { DbService } from '@core/db/db.service';
+import { ILogger } from '@core/logger/logger.interface';
+import { ConfigService } from '@core/config/config';
+import TYPES from '@core/types';
+import container from '@core/di/inversify.config';
 
 @injectable()
 export class Application {
@@ -24,6 +25,7 @@ export class Application {
 		this.server.setConfig(app => {
 			app.use(express.json());
 			app.use(express.urlencoded({ extended: true }));
+			app.use(cors(this.config.getCorsConfig()));
 
 			app.use((req, res, next) => {
 				this.logger.debug(`${req.method} ${req.url}`, {

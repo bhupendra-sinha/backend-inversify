@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { DatabaseConfig, ServerConfig, ValidatedEnv } from './config.types';
+import { CorsConfig, DatabaseConfig, ServerConfig, ValidatedEnv } from './config.types';
 import { validateEnv } from './config.validation';
 
 @injectable()
@@ -28,6 +28,18 @@ export class ConfigService {
 			logging: false,
 			entities,
 			ssl: { rejectUnauthorized: false }
+		};
+	}
+
+	getCorsConfig(): CorsConfig {
+		const allowedOrigins = ['http://localhost:5173', this.env.FE_APP_URL, this.env.SERVER_URL];
+
+		return {
+			origin: allowedOrigins,
+			methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+			allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
+			credentials: true,
+			maxAge: 3600
 		};
 	}
 }

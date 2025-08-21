@@ -5,6 +5,8 @@ import LogType from '../enums';
 config();
 
 export const envSchema = z.object({
+	SERVER_URL: z.string().url().default('http://localhost:8080'),
+	FE_APP_URL: z.string().default('http://localhost:5173'),
 	SERVER_LOG_LEVEL: z.nativeEnum(LogType).default(LogType.SILLY),
 	// Database Config
 	PG_HOST: z.string().default('localhost'),
