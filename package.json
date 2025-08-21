@@ -6,7 +6,15 @@
 		"dev": "nodemon index.ts",
 		"lint": "eslint . --ext .ts",
 		"lint:fix": "eslint . --ext .ts --fix",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"lint-staged": "lint-staged",
+		"prepare": "husky install"
+	},
+	"lint-staged": {
+		"**/*.ts": [
+			"eslint --fix",
+			"prettier --write"
+		]
 	},
 	"repository": "https://github.com/bhupendra-sinha/backend-inversify.git",
 	"author": "bhupendra-sinha <bhupendrasinha35413@gmail.com>",
@@ -36,6 +44,8 @@
 		"eslint-plugin-import": "^2.32.0",
 		"eslint-plugin-prettier": "^5.5.4",
 		"globals": "^16.3.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.1.5",
 		"prettier": "^3.6.2",
 		"typescript": "^5.9.2",
 		"typescript-eslint": "^8.40.0"
