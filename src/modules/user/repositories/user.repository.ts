@@ -6,9 +6,10 @@ import { UserDetail } from '../data/response/user.dto';
 import { UserEntity } from '../entities/user.entity';
 import { NotFoundError } from '@core/data/error/app.error';
 import { ListData } from '@core/data/entity/common.model';
+import { IUserRepository } from '../interfaces/user.interface';
 
 @injectable()
-export class UserRepository {
+export class UserRepository implements IUserRepository {
 	constructor(@inject(TYPES.USER_MODEL) private readonly userModel: Repository<UserEntity>) {}
 
 	async create(data: UserDto): Promise<UserDetail> {

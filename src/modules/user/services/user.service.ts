@@ -5,9 +5,10 @@ import TYPES from '@core/types';
 import { ILogger } from '@core/logger/logger.interface';
 import { UserRepository } from '../repositories/user.repository';
 import { ListData } from '@core/data/entity/common.model';
+import { IUserService } from '../interfaces/user.interface';
 
 @injectable()
-export class UserService {
+export class UserService implements IUserService {
 	constructor(
 		@inject(TYPES.LOGGER) private logger: ILogger,
 		@inject(TYPES.USER_REPOSITORY) private userRepository: UserRepository
