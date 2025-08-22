@@ -29,6 +29,7 @@ export class ConfigService {
 			// logging: this.env.PG_LOGGING,
 			logging: false,
 			entities,
+			synchronize: false,
 			ssl: { rejectUnauthorized: false }
 		};
 	}
