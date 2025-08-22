@@ -8,7 +8,7 @@ const CORE_TYPES = {
 const USER_TYPES = {
 	USER_SERVICE: Symbol.for('USER_SERVICE'),
 	USER_CONTROLLER: Symbol.for('USER_CONTROLLER'),
-	USER_MODAL: Symbol.for('USER_MODAL'),
+	USER_MODEL: Symbol.for('USER_MODEL'),
 	USER_REPOSITORY: Symbol.for('USER_REPOSITORY')
 };
 

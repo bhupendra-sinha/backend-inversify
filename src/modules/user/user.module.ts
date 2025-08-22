@@ -11,7 +11,7 @@ const userModule = new ContainerModule(bind => {
 	bind<UserService>(TYPES.USER_SERVICE).to(UserService).inSingletonScope();
 	bind<UserController>(TYPES.USER_CONTROLLER).to(UserController).inSingletonScope();
 	bind<UserRepository>(TYPES.USER_REPOSITORY).to(UserRepository).inSingletonScope();
-	bind<Repository<UserEntity>>(TYPES.USER_MODAL)
+	bind<Repository<UserEntity>>(TYPES.USER_MODEL)
 		.toDynamicValue(context => {
 			const dbService = context.container.get<DbService>(TYPES.DB);
 			return dbService.getDataSource().getRepository(UserEntity);

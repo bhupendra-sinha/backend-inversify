@@ -7,7 +7,6 @@ export const validateMiddleware = (schema: ZodObject) => {
 	return async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const validateData = await schema.parseAsync(req.body);
-			console.log('VALIDATE DATA', validateData);
 			req.body = validateData;
 			next();
 		} catch (error) {

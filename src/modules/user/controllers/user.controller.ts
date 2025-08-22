@@ -17,7 +17,6 @@ export class UserController extends BaseHttpController {
 	@Post('/')
 	@httpPost('/', validateMiddleware(userSchema))
 	async create(@requestBody() @Body() body: UserDto) {
-		console.log('BODY', body);
 		const result = await this.userService.create(body);
 		return this.ok(AppResponse.success(result));
 	}

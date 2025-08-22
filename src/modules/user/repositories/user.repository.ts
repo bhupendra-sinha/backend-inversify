@@ -8,19 +8,18 @@ import { NotFoundError } from '@core/data/error/app.error';
 
 @injectable()
 export class UserRepository {
-	constructor(@inject(TYPES.USER_MODAL) private readonly userModal: Repository<UserEntity>) {}
+	constructor(@inject(TYPES.USER_MODEL) private readonly userModel: Repository<UserEntity>) {}
 
 	async create(data: UserDto): Promise<UserDetail> {
-		const user = this.userModal.create(data);
+		const user = this.userModel.create(data);
 
-		console.log('USER', user);
-		await this.userModal.save(user);
+		await this.userModel.save(user);
 
-		return this.findByIdOrFail(user.id);
+		return await this.findByIdOrFail(user.id);
 	}
 
-	async findByIdOrFail(id: number): Promise<UserDetail> {
-		const user = await this.userModal.findOne({ where: { id } });
+	async findByIdOrFail(id: string): Promise<UserDetail> {
+		const user = await this.userModel.findOne({ where: { id } });
 		if (!user) {
 			throw new NotFoundError('User not found');
 		}
