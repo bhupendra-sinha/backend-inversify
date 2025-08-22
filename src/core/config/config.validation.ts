@@ -14,7 +14,8 @@ export const envSchema = z.object({
 	PG_PORT: z.coerce.number().positive().default(5432),
 	PG_USER: z.string().default('postgres'),
 	PG_PASSWORD: z.string().default('postgres'),
-	PG_DATABASE_NAME: z.string().default('postgres')
+	PG_DATABASE_NAME: z.string().default('postgres'),
+	PG_LOGGING: z.coerce.boolean().default(false)
 });
 
 const env = envSchema.safeParse(process.env);
