@@ -11,6 +11,7 @@ export interface DatabaseConfig {
 	database: string;
 	logging: boolean;
 	entities: string[];
+	synchronize: boolean;
 	ssl: false | { rejectUnauthorized: boolean };
 }
 
