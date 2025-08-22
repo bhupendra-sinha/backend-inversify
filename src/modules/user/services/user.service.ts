@@ -4,6 +4,7 @@ import { UserDetail } from '../data/response/user.dto';
 import TYPES from '@core/types';
 import { ILogger } from '@core/logger/logger.interface';
 import { UserRepository } from '../repositories/user.repository';
+import { ListData } from '@core/data/entity/common.model';
 
 @injectable()
 export class UserService {
@@ -16,5 +17,11 @@ export class UserService {
 		this.logger.debug('Creating user', data);
 		const user = await this.userRepository.create(data);
 		return user;
+	}
+
+	async findAll(): Promise<ListData<UserDetail>> {
+		this.logger.debug('Finding all users');
+		const users = await this.userRepository.findAll();
+		return users;
 	}
 }

@@ -22,7 +22,7 @@ export class Application {
 		@inject(TYPES.CONFIG) private config: ConfigService,
 		@inject(TYPES.ERROR_HANDLER) private errorHandler: ErrorHandlerMiddleware
 	) {
-		this.server = new InversifyExpressServer(container, null, null, null, null);
+		this.server = new InversifyExpressServer(container);
 	}
 
 	async initialize(): Promise<void> {

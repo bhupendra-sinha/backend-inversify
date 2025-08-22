@@ -5,6 +5,7 @@ import { UserDto } from '../data/request/user.dto';
 import { UserDetail } from '../data/response/user.dto';
 import { UserEntity } from '../entities/user.entity';
 import { NotFoundError } from '@core/data/error/app.error';
+import { ListData } from '@core/data/entity/common.model';
 
 @injectable()
 export class UserRepository {
@@ -24,5 +25,10 @@ export class UserRepository {
 			throw new NotFoundError('User not found');
 		}
 		return user;
+	}
+
+	async findAll(): Promise<ListData<UserDetail>> {
+		const [users, count] = await this.userModel.findAndCount();
+		return { items: users, totalCount: count, totalPages: 1, hasMore: count > 10 };
 	}
 }
