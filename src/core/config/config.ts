@@ -18,7 +18,8 @@ export class ConfigService {
 	}
 
 	getDatabaseConfig(): DatabaseConfig {
-		const entities = ['src/modules/**/entities/*.entity.ts'];
+		const isLocal = this.env.NODE_ENV == 'local';
+		const entities = isLocal ? ['src/modules/**/entities/*.entity.ts'] : ['build/src/modules/**/entities/*.entity.js'];
 
 		return {
 			port: this.env.PG_PORT,

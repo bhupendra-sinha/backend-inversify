@@ -1,4 +1,4 @@
-enum LogType {
+export enum LogType {
 	INFO = 'info',
 	ERROR = 'error',
 	WARN = 'warn',
@@ -8,4 +8,9 @@ enum LogType {
 	SILLY = 'silly'
 }
 
-export default LogType;
+export enum NodeType {
+	LOCAL = 'local',
+	DEVELOPMENT = 'development',
+	TEST = 'test',
+	PRODUCTION = 'production'
+}

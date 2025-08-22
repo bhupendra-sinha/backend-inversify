@@ -1,10 +1,11 @@
 import { z } from 'zod';
 import { config } from 'dotenv';
-import LogType from '../enums';
+import { LogType, NodeType } from '@core/enums';
 
 config();
 
 export const envSchema = z.object({
+	NODE_ENV: z.nativeEnum(NodeType).default(NodeType.DEVELOPMENT),
 	PORT: z.coerce.number().positive().default(8080),
 	SERVER_URL: z.string().url().default('http://localhost:8080'),
 	FE_APP_URL: z.string().default('http://localhost:5173'),
