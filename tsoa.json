@@ -1,0 +1,16 @@
+{
+	"entryFile": "src/index.ts",
+	"controllerPathGlobs": ["src/modules/**/*.controller.ts"],
+	"noImplicitAdditionalProperties": "throw-on-extras",
+	"spec": {
+		"outputDirectory": "src/swagger",
+		"specVersion": 3,
+		"basePath": "/api",
+		"name": "Ruya Bank API Documentation",
+		"description": "API documentation for the User Service built with Express, Inversify, and TSOA"
+	},
+	"routes": {
+		"routesDir": "src/routes",
+		"routesGeneration": "none"
+	}
+}

@@ -8,6 +8,8 @@ import { ConfigService } from '@core/config/config';
 import TYPES from '@core/types';
 import container from '@core/di/inversify.config';
 import { ErrorHandlerMiddleware } from '@core/error/errorHandling.middleware';
+import swaggerUi from 'swagger-ui-express';
+import * as swaggerDocument from './swagger/swagger.json';
 
 @injectable()
 export class Application {
@@ -37,6 +39,15 @@ export class Application {
 				});
 				next();
 			});
+
+			// INFO :- Swagger docs
+			app.use(
+				'/docs',
+				swaggerUi.serve,
+				swaggerUi.setup(swaggerDocument, {
+					customSiteTitle: 'Ruya Bank API Docs'
+				})
+			);
 		});
 
 		this.server.setErrorConfig(app => {

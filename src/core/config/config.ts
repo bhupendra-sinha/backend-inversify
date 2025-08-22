@@ -26,6 +26,7 @@ export class ConfigService {
 			username: this.env.PG_USER,
 			password: this.env.PG_PASSWORD,
 			database: this.env.PG_DATABASE_NAME,
+			// logging: this.env.PG_LOGGING,
 			logging: false,
 			entities,
 			ssl: { rejectUnauthorized: false }
