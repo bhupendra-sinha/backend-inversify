@@ -1,6 +1,6 @@
 import { DocumentStatus } from '@utils/constant';
 
-export interface IBusiness {
+export interface IBusinessDetails {
 	documentStatus: DocumentStatus;
 	companyName: string;
 	tradeLicenseNumber: string;
@@ -12,7 +12,7 @@ export interface IBusiness {
 	addressDetails: string;
 }
 
-export interface IBusinessResponse {
+export interface IBusinessDetailsResponse {
 	userSessionId: string;
-	tradeLicense: IBusiness;
+	tradeLicense: IBusinessDetails;
 }
