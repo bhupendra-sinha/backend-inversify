@@ -1,6 +1,5 @@
 import { BaseHttpController, controller, httpGet, httpPut, requestBody, requestParam } from 'inversify-express-utils';
 import { AppResponse } from '@core/data/response/app.response';
-import { Body } from 'tsoa';
 import { validateMiddleware } from '@core/middleware/validate.middleware';
 import { inject } from 'inversify';
 import TYPES from '@core/types';
@@ -15,7 +14,7 @@ class BusinessDetailsController extends BaseHttpController {
 	}
 
 	@httpPut('/documents/upload', validateMiddleware(businessDetailsSchema))
-	async create(@requestBody() @Body() body: BusinessDetailsDto) {
+	async uploadBusinessDetailsDocument(@requestBody() body: BusinessDetailsDto) {
 		const result = await this.businessService.uploadBusinessDetailsDocument(body);
 		return this.ok(AppResponse.success(result));
 	}
