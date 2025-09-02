@@ -1,21 +1,22 @@
 import { BaseHttpController, controller, httpGet, httpPut, requestBody, requestParam } from 'inversify-express-utils';
 import { AppResponse } from '@core/data/response/app.response';
-import { BusinessDto, businessSchema } from '../data/request/business_request.dto';
 import { Body } from 'tsoa';
 import { validateMiddleware } from '@core/middleware/validate.middleware';
 import { inject } from 'inversify';
 import TYPES from '@core/types';
-import BusinessService from '../services/business.service';
+import BusinessDetailsService from '../services/business_details.service';
+import { BusinessDetailsDto } from '../data/request/business_details_request.dto';
+import { businessDetailsSchema } from '../data/request/business_details_request.dto';
 
 @controller('/api/v1/business-details')
-export class BusinessController extends BaseHttpController {
-	constructor(@inject(TYPES.BUSINESS_SERVICE) private businessService: BusinessService) {
+class BusinessDetailsController extends BaseHttpController {
+	constructor(@inject(TYPES.BUSINESS_SERVICE) private businessService: BusinessDetailsService) {
 		super();
 	}
 
-	@httpPut('/documents/upload', validateMiddleware(businessSchema))
-	async create(@requestBody() @Body() body: BusinessDto) {
-		const result = await this.businessService.uploadBusinessDocument(body);
+	@httpPut('/documents/upload', validateMiddleware(businessDetailsSchema))
+	async create(@requestBody() @Body() body: BusinessDetailsDto) {
+		const result = await this.businessService.uploadBusinessDetailsDocument(body);
 		return this.ok(AppResponse.success(result));
 	}
 
@@ -25,3 +26,5 @@ export class BusinessController extends BaseHttpController {
 		return this.ok(AppResponse.success(result));
 	}
 }
+
+export default BusinessDetailsController;

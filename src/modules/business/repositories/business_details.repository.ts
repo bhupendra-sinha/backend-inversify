@@ -1,15 +1,15 @@
 import { inject, injectable } from 'inversify';
-import { BusinessDto } from '../data/request/business_request.dto';
 import TYPES from '@core/types';
 import { ILogger } from '@core/logger/logger.interface';
-import { IBusinessRepository } from '../interfaces/business.interface';
+import { IBusinessDetailsRepository } from '../interfaces/business_details.interface';
 import { DocumentStatus } from '@utils/constant';
+import { BusinessDetailsDto } from '../data/request/business_details_request.dto';
 
 @injectable()
-class BusinessRepository implements IBusinessRepository {
+class BusinessDetailsRepository implements IBusinessDetailsRepository {
 	constructor(@inject(TYPES.LOGGER) private logger: ILogger) {}
 
-	async uploadBusinessDocument(data: BusinessDto) {
+	async uploadBusinessDetailsDocument(data: BusinessDetailsDto) {
 		this.logger.debug('Creating business document', data);
 		// INFO :- the AI logic will add here
 		return { message: 'Business details document uploaded successfully' };
@@ -31,4 +31,4 @@ class BusinessRepository implements IBusinessRepository {
 	}
 }
 
-export default BusinessRepository;
+export default BusinessDetailsRepository;
