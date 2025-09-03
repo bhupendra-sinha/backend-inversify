@@ -2,5 +2,6 @@ import userModule from '../../modules/user/user.module';
 import businessModule from '../../modules/business/business.module';
 import financialModule from '../../modules/financial/financial.module';
 import ownershipModule from '../../modules/ownership/ownership.module';
+import otherModule from '../../modules/other/other.module';
 
-export default [userModule, businessModule, financialModule, ownershipModule];
+export default [userModule, businessModule, financialModule, ownershipModule, otherModule];
