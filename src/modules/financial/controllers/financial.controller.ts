@@ -4,6 +4,7 @@ import { BaseHttpController, controller, httpGet, httpPost, requestBody, request
 import { validateMiddleware } from '@core/middleware/validate.middleware';
 import { FinancialDto, financialSchema } from '../data/request/financial_request.dto';
 import FinancialService from '../services/financial.service';
+import { AppResponse } from '@core/data/response/app.response';
 
 @controller('/api/v1/financials-details')
 class FinancialController extends BaseHttpController {
@@ -13,12 +14,14 @@ class FinancialController extends BaseHttpController {
 
 	@httpGet('documents/session/:sessionId')
 	async getBySessionId(@requestParam('sessionId') sessionId: string) {
-		return this.ok(await this.financialService.getBySessionId(sessionId));
+		const result = await this.financialService.getBySessionId(sessionId);
+		return this.ok(AppResponse.success(result));
 	}
 
 	@httpPost('documents/upload', validateMiddleware(financialSchema))
 	async uploadFinancialDocument(@requestBody() data: FinancialDto) {
-		return this.ok(await this.financialService.uploadFinancialDocument(data));
+		const result = await this.financialService.uploadFinancialDocument(data);
+		return this.ok(AppResponse.success(result));
 	}
 }
 
