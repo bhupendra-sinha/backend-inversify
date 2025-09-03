@@ -5,18 +5,18 @@ import { validateMiddleware } from '@core/middleware/validate.middleware';
 import { FinancialDto, financialSchema } from '../data/request/financial_request.dto';
 import FinancialService from '../services/financial.service';
 
-@controller('/financial')
+@controller('/api/v1/financials-details')
 class FinancialController extends BaseHttpController {
 	constructor(@inject(TYPES.FINANCIAL_SERVICE) private financialService: FinancialService) {
 		super();
 	}
 
-	@httpGet('/getBySessionId/:sessionId')
+	@httpGet('documents/session/:sessionId')
 	async getBySessionId(@requestParam('sessionId') sessionId: string) {
 		return this.ok(await this.financialService.getBySessionId(sessionId));
 	}
 
-	@httpPost('/uploadFinancialDocument', validateMiddleware(financialSchema))
+	@httpPost('documents/upload', validateMiddleware(financialSchema))
 	async uploadFinancialDocument(@requestBody() data: FinancialDto) {
 		return this.ok(await this.financialService.uploadFinancialDocument(data));
 	}
