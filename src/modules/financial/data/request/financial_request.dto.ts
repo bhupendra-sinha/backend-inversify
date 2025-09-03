@@ -1,8 +1,8 @@
 import z from 'zod';
 
 export const financialSchema = z.object({
-	bankStatement: z.array(z.instanceof(Buffer)),
-	auditedFinancials: z.array(z.instanceof(Buffer)),
+	bankStatement: z.instanceof(Buffer),
+	auditedFinancials: z.instanceof(Buffer),
 	userSessionId: z.string()
 });
 

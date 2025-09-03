@@ -1,8 +1,8 @@
 import z from 'zod';
 
 export const ownershipSchema = z.object({
-	passport: z.array(z.instanceof(Buffer)),
-	emiratesId: z.array(z.instanceof(Buffer)),
+	passport: z.instanceof(Buffer),
+	emiratesId: z.instanceof(Buffer),
 	userSessionId: z.string()
 });
 

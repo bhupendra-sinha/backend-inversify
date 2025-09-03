@@ -1,7 +1,7 @@
 import z from 'zod';
 
 export const businessDetailsSchema = z.object({
-	tradeLicense: z.array(z.instanceof(Buffer)),
+	tradeLicense: z.instanceof(Buffer),
 	userSessionId: z.uuid()
 });
 

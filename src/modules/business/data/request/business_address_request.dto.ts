@@ -1,7 +1,7 @@
 import z from 'zod';
 
 export const businessAddressSchema = z.object({
-	document: z.array(z.instanceof(Buffer)),
+	document: z.instanceof(Buffer),
 	userSessionId: z.uuid()
 });
 
