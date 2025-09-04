@@ -33,3 +33,6 @@ export const UploadedFileSchema = z.object({
 	filename: z.string().optional(),
 	path: z.string().optional()
 });
+
+// INFO:- ownershipFields for multer middleware and zod validation
+export const ownershipFields = [{ name: 'passport' }, { name: 'emiratesId' }];
