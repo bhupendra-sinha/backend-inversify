@@ -1,3 +1,5 @@
+import z from 'zod';
+
 export enum DocumentType {
 	TRADE_LICENSE = 'TRADE_LICENSE',
 	EMIRATES_ID = 'EMIRATES_ID',
@@ -16,3 +18,18 @@ export enum DocumentStatus {
 	PENDING = 'PENDING',
 	REJECTED = 'REJECTED'
 }
+
+// base schema for any Multer file
+export const UploadedFileSchema = z.object({
+	fieldname: z.string(),
+	originalname: z.string(),
+	encoding: z.string(),
+	mimetype: z.string().regex(/^image\/(jpeg|png|jpg|gif|pdf)$/i, {
+		message: 'Only image or PDF files are allowed'
+	}),
+	size: z.number().positive(),
+	buffer: z.instanceof(Buffer),
+	destination: z.string().optional(),
+	filename: z.string().optional(),
+	path: z.string().optional()
+});

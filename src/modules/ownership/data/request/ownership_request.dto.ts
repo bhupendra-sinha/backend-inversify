@@ -1,8 +1,9 @@
 import z from 'zod';
+import { UploadedFileSchema } from '@utils/constant';
 
 export const ownershipSchema = z.object({
-	passport: z.instanceof(Buffer),
-	emiratesId: z.instanceof(Buffer),
+	passport: UploadedFileSchema,
+	emiratesId: UploadedFileSchema,
 	userSessionId: z.string()
 });
 

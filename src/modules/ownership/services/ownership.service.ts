@@ -13,13 +13,13 @@ class OwnershipService implements IOwnershipService {
 	) {}
 
 	async uploadOwnershipDocument(data: OwnershipDto) {
-		this.logger.info('uploading business document', data);
+		this.logger.info('uploading ownership document');
 		const business = await this.businessRepository.uploadOwnershipDocument(data);
 		return business;
 	}
 
 	async getBySessionId(sessionId: string) {
-		this.logger.info('Getting business document by session id', { sessionId });
+		this.logger.info('Getting ownership document by session id', { sessionId });
 		const business = await this.businessRepository.getBySessionId(sessionId);
 		return business;
 	}

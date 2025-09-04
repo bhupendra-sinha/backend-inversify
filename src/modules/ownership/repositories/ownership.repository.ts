@@ -4,16 +4,26 @@ import { OwnershipDto } from '../data/request/ownership_request.dto';
 import TYPES from '@core/types';
 import { ILogger } from '@core/logger/logger.interface';
 import { inject } from 'inversify';
+import FormData from 'form-data';
+import axios from 'axios';
 
 @injectable()
 class OwnershipRepository implements IOwnershipRepository {
 	constructor(@inject(TYPES.LOGGER) private logger: ILogger) {}
 
 	async uploadOwnershipDocument(body: OwnershipDto) {
-		this.logger.info('uploading ownership document', body);
-		console.log(body);
+		this.logger.info('uploading ownership document', { userSessionId: body.userSessionId });
 
-		return { message: 'Ownership document uploaded successfully' };
+		const formData = new FormData();
+		formData.append('passport', body.passport.buffer, body.passport.originalname);
+
+		const response = await axios.post('http://127.0.0.1:8000/api/v1/documents/passport/analyze', formData, {
+			headers: formData.getHeaders()
+		});
+
+		console.log('FastAPI response:', response.data);
+
+		return { message: 'Ownership document uploaded successfully', data: response.data };
 	}
 
 	async getBySessionId(sessionId: string) {

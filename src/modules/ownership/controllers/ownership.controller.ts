@@ -12,7 +12,7 @@ class OwnershipController extends BaseHttpController {
 		super();
 	}
 
-	@httpPut('/documents/upload', validateMiddleware(ownershipSchema))
+	@httpPut('/documents/upload', validateMiddleware(ownershipSchema, [{ name: 'passport' }, { name: 'emiratesId' }]))
 	async uploadOwnershipDocument(@requestBody() body: OwnershipDto) {
 		const result = await this.ownershipService.uploadOwnershipDocument(body);
 		return this.ok(AppResponse.success(result));
