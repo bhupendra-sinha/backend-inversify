@@ -30,6 +30,7 @@
 		"@logger": "./build/src/core/logger",
 		"@db": "./build/src/core/db",
 		"@types": "./build/src/core/types",
+		"@services": "./build/src/core/services",
 		"@utils": "./build/src/utils"
 	},
 	"dependencies": {
