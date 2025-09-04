@@ -5,25 +5,43 @@ import TYPES from '@core/types';
 import { ILogger } from '@core/logger/logger.interface';
 import { inject } from 'inversify';
 import FormData from 'form-data';
-import axios from 'axios';
+import { HttpClientService } from '@core/services/http_AI.service';
 
 @injectable()
 class OwnershipRepository implements IOwnershipRepository {
-	constructor(@inject(TYPES.LOGGER) private logger: ILogger) {}
+	constructor(
+		@inject(TYPES.LOGGER) private logger: ILogger,
+		@inject(TYPES.HTTP_AI) private httpAi: HttpClientService
+	) {}
 
 	async uploadOwnershipDocument(body: OwnershipDto) {
 		this.logger.info('uploading ownership document', { userSessionId: body.userSessionId });
 
+		// TODO :- will increase the code quality and manage it in a best way
+
+		// INFO:- passport
 		const formData = new FormData();
 		formData.append('passport', body.passport.buffer, body.passport.originalname);
 
-		const response = await axios.post('http://127.0.0.1:8000/api/v1/documents/passport/analyze', formData, {
+		this.logger.info('calling fastApi', { userSessionId: body.userSessionId });
+		const passportResponse = await this.httpAi.post('/passport/analyze', formData, {
 			headers: formData.getHeaders()
 		});
 
-		console.log('FastAPI response:', response.data);
+		// INFO:- emirates_id
+		// const formData = new FormData();
+		// formData.append('emirates_id', body.emiratesId.buffer, body.emiratesId.originalname);
 
-		return { message: 'Ownership document uploaded successfully', data: response.data };
+		// this.logger.info('calling fastApi', { userSessionId: body.userSessionId });
+		// const emiratesIdResponse = await this.httpAi.post('/emirates_id/analyze', formData, {
+		// 	headers: formData.getHeaders()
+		// });
+
+		console.log('fastApi response', passportResponse);
+
+		this.logger.info('fastApi response', { userSessionId: body.userSessionId, passportResponse });
+
+		return { message: 'Ownership document uploaded successfully', data: passportResponse };
 	}
 
 	async getBySessionId(sessionId: string) {

@@ -4,23 +4,6 @@ import { Request, Response, NextFunction } from 'express';
 import { ZodError, ZodObject } from 'zod';
 import multer from 'multer';
 
-// export const validateMiddleware = (schema: ZodObject) => {
-// 	return async (req: Request, res: Response, next: NextFunction) => {
-// 		try {
-// 			const validateData = await schema.parseAsync(req.body);
-// 			req.body = validateData;
-// 			next();
-// 		} catch (error) {
-// 			if (error instanceof ZodError) {
-// 				const response = AppResponse.errorFromException(new ValidationError('Validation failed', error.format()));
-// 				res.status(400).json(response);
-// 				return;
-// 			}
-// 			next(error);
-// 		}
-// 	};
-// };
-
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 

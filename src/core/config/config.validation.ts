@@ -16,7 +16,10 @@ export const envSchema = z.object({
 	PG_USER: z.string().default('postgres'),
 	PG_PASSWORD: z.string().default('postgres'),
 	PG_DATABASE_NAME: z.string().default('postgres'),
-	PG_LOGGING: z.coerce.boolean().default(false)
+	PG_LOGGING: z.coerce.boolean().default(false),
+
+	// AI Config
+	AI_SERVER_URL: z.string().default('http://127.0.0.1:8000')
 });
 
 const env = envSchema.safeParse(process.env);

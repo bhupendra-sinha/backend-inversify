@@ -51,6 +51,10 @@ const SIGNATORY_TYPES = {
 	SIGNATORY_CONTROLLER: Symbol.for('SIGNATORY_CONTROLLER')
 };
 
+const AI_TYPES = {
+	HTTP_AI: Symbol.for('HTTP_AI')
+};
+
 const TYPES = {
 	...CORE_TYPES,
 	...USER_TYPES,
@@ -59,7 +63,8 @@ const TYPES = {
 	...OWNERSHIP_TYPES,
 	...FINANCIAL_TYPES,
 	...OTHER_TYPES,
-	...SIGNATORY_TYPES
+	...SIGNATORY_TYPES,
+	...AI_TYPES
 };
 
 export default TYPES;

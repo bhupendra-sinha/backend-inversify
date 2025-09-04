@@ -27,3 +27,7 @@ export interface ServerConfig {
 	logLevel: string;
 	port: number;
 }
+
+export interface AIServerConfig {
+	BASE_URL: string;
+}
