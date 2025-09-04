@@ -22,6 +22,7 @@
 			"@logger/*": ["core/logger/*"],
 			"@db/*": ["core/db/*"],
 			"@types/*": ["core/types/*"],
+			"@services/*": ["core/services/*"],
 			"@utils/*": ["utils/*"]
 		}
 	},

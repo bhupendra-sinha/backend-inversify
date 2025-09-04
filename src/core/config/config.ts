@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { CorsConfig, DatabaseConfig, ServerConfig, ValidatedEnv } from './config.types';
+import { AIServerConfig, CorsConfig, DatabaseConfig, ServerConfig, ValidatedEnv } from './config.types';
 import { validateEnv } from './config.validation';
 
 @injectable()
@@ -44,6 +44,12 @@ export class ConfigService {
 			allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
 			credentials: true,
 			maxAge: 3600
+		};
+	}
+
+	getAIServerConfig(): AIServerConfig {
+		return {
+			BASE_URL: this.env.AI_SERVER_URL
 		};
 	}
 }
