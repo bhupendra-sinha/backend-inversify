@@ -6,16 +6,33 @@ import { ILogger } from '@core/logger/logger.interface';
 import { inject } from 'inversify';
 import FormData from 'form-data';
 import { HttpClientService } from '@core/services/http_AI.service';
+import { RedisService } from '@core/services/redis.service';
+import crypto from 'crypto';
+import { IPassportDto } from '../data/response/ownership_response.dto';
+import { AIResponse } from '@core/data/entity/common.model';
 
 @injectable()
 class OwnershipRepository implements IOwnershipRepository {
 	constructor(
 		@inject(TYPES.LOGGER) private logger: ILogger,
-		@inject(TYPES.HTTP_AI) private httpAi: HttpClientService
+		@inject(TYPES.HTTP_AI) private httpAi: HttpClientService,
+		@inject(TYPES.REDIS_SERVICE) private redisService: RedisService
 	) {}
 
 	async uploadOwnershipDocument(body: OwnershipDto) {
 		this.logger.info('uploading ownership document', { userSessionId: body.userSessionId });
+
+		// INFO :- generate hash for file buffer
+		const hash = crypto.createHash('sha256').update(body.passport.buffer).digest('hex');
+
+		const hashKey = `ownership:${body.userSessionId}:${hash}`;
+
+		// INFO :- check if file is already processed
+		const cachedResult = await this.redisService.get(hashKey);
+		if (cachedResult) {
+			this.logger.info('Ownership document already processed', { userSessionId: body.userSessionId });
+			return { message: 'Ownership document already processed', data: cachedResult };
+		}
 
 		// TODO :- will increase the code quality and manage it in a best way
 
@@ -24,7 +41,7 @@ class OwnershipRepository implements IOwnershipRepository {
 		formData.append('passport', body.passport.buffer, body.passport.originalname);
 
 		this.logger.info('calling fastApi', { userSessionId: body.userSessionId });
-		const passportResponse = await this.httpAi.post('/passport/analyze', formData, {
+		const passportResponse = await this.httpAi.post<AIResponse<IPassportDto>>('/passport/analyze', formData, {
 			headers: formData.getHeaders()
 		});
 
@@ -37,11 +54,14 @@ class OwnershipRepository implements IOwnershipRepository {
 		// 	headers: formData.getHeaders()
 		// });
 
+		// INFO :- store result in redis
+		await this.redisService.set(hashKey, passportResponse, 5 * 60);
+
 		console.log('fastApi response', passportResponse);
 
 		this.logger.info('fastApi response', { userSessionId: body.userSessionId, passportResponse });
 
-		return { message: 'Ownership document uploaded successfully', data: passportResponse };
+		return { message: 'Ownership document uploaded successfully', passportResponse: passportResponse.data };
 	}
 
 	async getBySessionId(sessionId: string) {
@@ -61,14 +81,15 @@ class OwnershipRepository implements IOwnershipRepository {
 			},
 			passport: {
 				documentStatus: 'VERIFIED',
-				passportNumber: 'string',
-				firstName: 'string',
-				lastName: 'string',
+				passport_number: 'string',
+				first_name: 'string',
+				last_name: 'string',
 				nationality: 'string',
-				visaIssuingDate: 'YYYY-MM-DD',
-				visaExpiryDate: 'YYYY-MM-DD',
-				dateOfBirth: 'YYYY-MM-DD',
-				photograph: 'image_url_or_base64'
+				issuing_country: 'string',
+				date_of_issue: 'string',
+				expiration_date: 'string',
+				date_of_birth: 'string',
+				photograph: 'string'
 			}
 		};
 	}

@@ -13,13 +13,14 @@ export interface IEmiratesIdDto {
 
 export interface IPassportDto {
 	documentStatus: string;
-	passportNumber: string;
-	firstName: string;
-	lastName: string;
+	passport_number: string;
+	first_name: string;
+	last_name: string;
 	nationality: string;
-	visaIssuingDate: string;
-	visaExpiryDate: string;
-	dateOfBirth: string;
+	issuing_country: string;
+	date_of_issue: string;
+	expiration_date: string;
+	date_of_birth: string;
 	photograph: string;
 }
 

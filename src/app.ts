@@ -10,6 +10,7 @@ import container from '@core/di/inversify.config';
 import { ErrorHandlerMiddleware } from '@core/error/errorHandling.middleware';
 import swaggerUi from 'swagger-ui-express';
 import * as swaggerDocument from './swagger/swagger.json';
+import { RedisService } from '@core/services/redis.service';
 
 @injectable()
 export class Application {
@@ -20,7 +21,8 @@ export class Application {
 		@inject(TYPES.DB) private dbService: DbService,
 		@inject(TYPES.LOGGER) private logger: ILogger,
 		@inject(TYPES.CONFIG) private config: ConfigService,
-		@inject(TYPES.ERROR_HANDLER) private errorHandler: ErrorHandlerMiddleware
+		@inject(TYPES.ERROR_HANDLER) private errorHandler: ErrorHandlerMiddleware,
+		@inject(TYPES.REDIS_SERVICE) private redisService: RedisService
 	) {
 		this.server = new InversifyExpressServer(container);
 	}
@@ -65,6 +67,7 @@ export class Application {
 
 		return new Promise(resolve => {
 			this.dbService.initialize();
+			this.redisService.initialize();
 			this.app?.listen(serverConfig.port, () => {
 				this.logger.info(`Server running in ${serverConfig.logLevel} mode on port ${serverConfig.port}`);
 				resolve();

@@ -6,6 +6,7 @@ import { Logger } from './logger/winston.logger';
 import { ConfigService } from './config/config';
 import { ErrorHandlerMiddleware } from './error/errorHandling.middleware';
 import { HttpClientService } from './services/http_AI.service';
+import { RedisService } from './services/redis.service';
 
 const coreModule = new ContainerModule(bind => {
 	bind<ILogger>(TYPES.LOGGER).to(Logger).inSingletonScope();
@@ -15,6 +16,9 @@ const coreModule = new ContainerModule(bind => {
 
 	// INFO :- HTTP AI Client
 	bind<HttpClientService>(TYPES.HTTP_AI).to(HttpClientService).inSingletonScope();
+
+	// INFO :- Redis Client
+	bind<RedisService>(TYPES.REDIS_SERVICE).to(RedisService).inSingletonScope();
 });
 
 export default coreModule;

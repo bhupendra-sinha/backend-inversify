@@ -4,3 +4,8 @@ export interface ListData<T> {
 	totalPages: number;
 	hasMore: boolean;
 }
+
+export interface AIResponse<T> {
+	data: T;
+	success: boolean;
+}

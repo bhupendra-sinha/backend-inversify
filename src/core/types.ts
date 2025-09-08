@@ -55,6 +55,10 @@ const AI_TYPES = {
 	HTTP_AI: Symbol.for('HTTP_AI')
 };
 
+const REDIS_TYPES = {
+	REDIS_SERVICE: Symbol.for('REDIS_SERVICE')
+};
+
 const TYPES = {
 	...CORE_TYPES,
 	...USER_TYPES,
@@ -64,7 +68,8 @@ const TYPES = {
 	...FINANCIAL_TYPES,
 	...OTHER_TYPES,
 	...SIGNATORY_TYPES,
-	...AI_TYPES
+	...AI_TYPES,
+	...REDIS_TYPES
 };
 
 export default TYPES;
