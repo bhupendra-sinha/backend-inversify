@@ -6,16 +6,31 @@ import { ILogger } from '@core/logger/logger.interface';
 import { inject } from 'inversify';
 import FormData from 'form-data';
 import { HttpClientService } from '@core/services/http_AI.service';
+import { RedisService } from '@core/services/redis.service';
+import crypto from 'crypto';
 
 @injectable()
 class OwnershipRepository implements IOwnershipRepository {
 	constructor(
 		@inject(TYPES.LOGGER) private logger: ILogger,
-		@inject(TYPES.HTTP_AI) private httpAi: HttpClientService
+		@inject(TYPES.HTTP_AI) private httpAi: HttpClientService,
+		@inject(TYPES.REDIS_SERVICE) private redisService: RedisService
 	) {}
 
 	async uploadOwnershipDocument(body: OwnershipDto) {
 		this.logger.info('uploading ownership document', { userSessionId: body.userSessionId });
+
+		// INFO :- generate hash for file buffer
+		const hash = crypto.createHash('sha256').update(body.passport.buffer).digest('hex');
+
+		const hashKey = `ownership:${body.userSessionId}:${hash}`;
+
+		// INFO :- check if file is already processed
+		const cachedResult = await this.redisService.get(hashKey);
+		if (cachedResult) {
+			this.logger.info('Ownership document already processed', { userSessionId: body.userSessionId });
+			return { message: 'Ownership document already processed', data: cachedResult };
+		}
 
 		// TODO :- will increase the code quality and manage it in a best way
 
@@ -36,6 +51,9 @@ class OwnershipRepository implements IOwnershipRepository {
 		// const emiratesIdResponse = await this.httpAi.post('/emirates_id/analyze', formData, {
 		// 	headers: formData.getHeaders()
 		// });
+
+		// INFO :- store result in redis
+		await this.redisService.set(hashKey, passportResponse, 5 * 60);
 
 		console.log('fastApi response', passportResponse);
 

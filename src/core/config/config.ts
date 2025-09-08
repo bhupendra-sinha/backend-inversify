@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { AIServerConfig, CorsConfig, DatabaseConfig, ServerConfig, ValidatedEnv } from './config.types';
+import { AIServerConfig, CorsConfig, DatabaseConfig, RedisConfig, ServerConfig, ValidatedEnv } from './config.types';
 import { validateEnv } from './config.validation';
 
 @injectable()
@@ -50,6 +50,15 @@ export class ConfigService {
 	getAIServerConfig(): AIServerConfig {
 		return {
 			BASE_URL: this.env.AI_SERVER_URL
+		};
+	}
+
+	getRedisConfig(): RedisConfig {
+		return {
+			BASE_URL: this.env.REDIS_HOST,
+			PORT: this.env.REDIS_PORT,
+			USERNAME: this.env.REDIS_USERNAME,
+			PASSWORD: this.env.REDIS_PASSWORD
 		};
 	}
 }

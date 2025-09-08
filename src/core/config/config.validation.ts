@@ -19,7 +19,13 @@ export const envSchema = z.object({
 	PG_LOGGING: z.coerce.boolean().default(false),
 
 	// AI Config
-	AI_SERVER_URL: z.string().default('http://127.0.0.1:8000')
+	AI_SERVER_URL: z.string().default('http://127.0.0.1:8000'),
+
+	// Redis Config
+	REDIS_HOST: z.string(),
+	REDIS_PORT: z.coerce.number().positive(),
+	REDIS_PASSWORD: z.string(),
+	REDIS_USERNAME: z.string().default('default')
 });
 
 const env = envSchema.safeParse(process.env);

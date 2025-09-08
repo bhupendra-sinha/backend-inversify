@@ -31,3 +31,10 @@ export interface ServerConfig {
 export interface AIServerConfig {
 	BASE_URL: string;
 }
+
+export interface RedisConfig {
+	BASE_URL: string;
+	PORT: number;
+	USERNAME: string;
+	PASSWORD: string;
+}
