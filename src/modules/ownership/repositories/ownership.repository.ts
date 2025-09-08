@@ -8,6 +8,8 @@ import FormData from 'form-data';
 import { HttpClientService } from '@core/services/http_AI.service';
 import { RedisService } from '@core/services/redis.service';
 import crypto from 'crypto';
+import { IPassportDto } from '../data/response/ownership_response.dto';
+import { AIResponse } from '@core/data/entity/common.model';
 
 @injectable()
 class OwnershipRepository implements IOwnershipRepository {
@@ -39,7 +41,7 @@ class OwnershipRepository implements IOwnershipRepository {
 		formData.append('passport', body.passport.buffer, body.passport.originalname);
 
 		this.logger.info('calling fastApi', { userSessionId: body.userSessionId });
-		const passportResponse = await this.httpAi.post('/passport/analyze', formData, {
+		const passportResponse = await this.httpAi.post<AIResponse<IPassportDto>>('/passport/analyze', formData, {
 			headers: formData.getHeaders()
 		});
 
@@ -59,7 +61,7 @@ class OwnershipRepository implements IOwnershipRepository {
 
 		this.logger.info('fastApi response', { userSessionId: body.userSessionId, passportResponse });
 
-		return { message: 'Ownership document uploaded successfully', data: passportResponse };
+		return { message: 'Ownership document uploaded successfully', passportResponse: passportResponse.data };
 	}
 
 	async getBySessionId(sessionId: string) {
@@ -79,14 +81,15 @@ class OwnershipRepository implements IOwnershipRepository {
 			},
 			passport: {
 				documentStatus: 'VERIFIED',
-				passportNumber: 'string',
-				firstName: 'string',
-				lastName: 'string',
+				passport_number: 'string',
+				first_name: 'string',
+				last_name: 'string',
 				nationality: 'string',
-				visaIssuingDate: 'YYYY-MM-DD',
-				visaExpiryDate: 'YYYY-MM-DD',
-				dateOfBirth: 'YYYY-MM-DD',
-				photograph: 'image_url_or_base64'
+				issuing_country: 'string',
+				date_of_issue: 'string',
+				expiration_date: 'string',
+				date_of_birth: 'string',
+				photograph: 'string'
 			}
 		};
 	}
